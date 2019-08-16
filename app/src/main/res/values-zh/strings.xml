@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">实时人车物识别</string>
+    <string name="camera_error">这台设备太久不支持CameraAPI</string>
+    <string name="description_info">信息</string>
+    <string name="intro_message">
+        <![CDATA[
+
+            这个demo 使用的是
+            MobileSSD V1的模型和Tencent的NCNN框架
+            由 Christopher (https://github.com/chentyjpm) 编写
+
+            For any problem contact me via QQ:317974925
+
+        ]]></string>
+    <string name="request_permission">这个demo需要使用摄像头权限，如果出现黑屏请重起一次</string>
+</resources>
