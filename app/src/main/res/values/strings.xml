@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">RTCAMERA_SSD</string>
+    <string name="description_info">Info</string>
+    <string name="request_permission">This sample needs camera permission. please restart it</string>
+    <string name="camera_error">This device doesn\'t support Camera2 API.</string>
+
+    <string name="intro_message">
+        <![CDATA[
+
+            This sample use ncnn and mobilenet ssd
+            Code by Christopher (https://github.com/chentyjpm)
+
+            For any problem contact me via QQ:317974925
+
+        ]]>
+    </string>
+</resources>
