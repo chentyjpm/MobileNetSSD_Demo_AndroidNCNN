@@ -102,8 +102,8 @@ public class CameraNcnnFragment extends Fragment
     private static final String TAG = "CameraNcnnFragment";
 
     private Point displaySize = new Point();
-    private static final int MAX_PREVIEW_WIDTH = 1920;
-    private static final int MAX_PREVIEW_HEIGHT = 1080;
+    private static final int MAX_PREVIEW_WIDTH = 1280;
+    private static final int MAX_PREVIEW_HEIGHT = 720;
 
     private final SurfaceView.OnAttachStateChangeListener mSurfaveViewListener =
             new SurfaceView.OnAttachStateChangeListener() {
@@ -204,11 +204,13 @@ public class CameraNcnnFragment extends Fragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            Log.d(TAG, "onImageAvailable");
+
             Image im = reader.acquireNextImage();
             int chcnt = im.getPlanes().length;
             int width = im.getWidth();
             int height = im.getHeight();
+
+            Log.d(TAG, "onImageAvailable "+ width + "X" + height + "X" + chcnt);
 
             ByteBuffer bufferY = im.getPlanes()[0].getBuffer();
             ByteBuffer bufferU = im.getPlanes()[1].getBuffer();
@@ -435,12 +437,33 @@ public class CameraNcnnFragment extends Fragment
                 Size largest = Collections.max(outlist, new CompareSizesByArea());
                 Log.i(TAG, "Output =" + largest);
 
+
+
+
                 // Find out if we need to swap dimension to get the preview size relative to sensor
                 // coordinate.
                 int displayRotation = activity.getWindowManager().getDefaultDisplay().getRotation();
                 //noinspection ConstantConditions
                 mSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
                 boolean swappedDimensions = false;
+                switch (displayRotation) {
+                    case Surface.ROTATION_0:
+                    case Surface.ROTATION_180:
+                        if (mSensorOrientation == 90 || mSensorOrientation == 270) {
+                            swappedDimensions = true;
+                        }
+                        break;
+                    case Surface.ROTATION_90:
+                    case Surface.ROTATION_270:
+                        if (mSensorOrientation == 0 || mSensorOrientation == 180) {
+                            swappedDimensions = true;
+                        }
+                        break;
+                    default:
+                        Log.e(TAG, "Display rotation is invalid: " + displayRotation);
+                }
+
+                Log.d(TAG, "Display is " + displayRotation + " camera is " + mSensorOrientation + "swappedDimensions is " + swappedDimensions);
 
                 activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
                 int rotatedPreviewWidth = width;
@@ -469,6 +492,18 @@ public class CameraNcnnFragment extends Fragment
                 mPreviewSize = chooseOptimalSize(map.getOutputSizes(SurfaceTexture.class),
                         rotatedPreviewWidth, rotatedPreviewHeight, maxPreviewWidth,
                         maxPreviewHeight, largest);
+
+
+                //fix size 1280XN
+                for(Size item : outlist)
+                {
+                    if(item.getWidth() == 1280)
+                    {
+                        Log.i(TAG, "get  target resv is " +item.getWidth() + "X" + item.getHeight());
+                        mPreviewSize = item;
+                    }
+                }
+
                 Log.i(TAG, "get mPreviewSize " + mPreviewSize);
 
                 // We fit the aspect ratio of TextureView to the size of preview we picked.

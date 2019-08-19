@@ -159,21 +159,21 @@ void mobilenet_yuv420sp2rgb(const unsigned char* yuv420sp, int w, int h, unsigne
 extern "C" JNIEXPORT jdoubleArray JNICALL
 Java_com_chenty_testncnn_CameraNcnnFragment_detectyonly(JNIEnv *env, jobject thiz, jbyteArray frame, jint src_width,
                                 jint src_height, jdoubleArray detect) {
-    char *argb_frame = (char*)env->GetPrimitiveArrayCritical(frame, NULL);
+    char *yuv_frame = (char*)env->GetPrimitiveArrayCritical(frame, NULL);
 
     int size = env->GetArrayLength(frame);
     int objectcnt = 0;
     int i;
 
     //shift argb to rgba
-    char *rgba = (char *)malloc(size);
-    memcpy(rgba, argb_frame + 1, size - 1);
+    char *yuv = (char *)malloc(size);
+    memcpy(yuv, yuv_frame, size);
 
-    env->ReleasePrimitiveArrayCritical(frame, argb_frame, JNI_ABORT);
+    env->ReleasePrimitiveArrayCritical(frame, yuv_frame, JNI_ABORT);
 
-    struct ai_object_t *obj = cpp_mobilenet_aidetect((const unsigned char *)rgba, src_width, src_height, &objectcnt);
+    struct ai_object_t *obj = cpp_mobilenet_aidetect((const unsigned char *)yuv, src_width, src_height, &objectcnt);
 
-    free(rgba);
+    free(yuv);
 
     double *detect_out = (double *)env->GetPrimitiveArrayCritical(detect, NULL);
     if(objectcnt <= 0)
