@@ -5,7 +5,8 @@
 	在研究了一段时间的 ncnn后 准备做一个安卓的demo 以便更好的熟悉和使用 NCNN
 
 ## 先上APP和效果
-    app地址 ：https://pan.baidu.com/s/1MX8GnM3xR4u0dcyw7iVSRg
+    app地址 ：https://pan.baidu.com/s/1MX8GnM3xR4u0dcyw7iVSRg  已经失效 从 https://github.com/chentyjpm/MobileNetSSD_Demo_AndroidNCNN/releases/download/new/RealTimeCamSSD_fixCameraDisplayerr.zip
+    下载吧
 ![](http://www.chenty.com/wp-content/uploads/2019/08/Screenshot_2019-08-16-13-54-38-377_com.chenty.tes_-1024x473.png) 
 ![](http://www.chenty.com/wp-content/uploads/2019/08/Screenshot_2019-08-16-12-07-00-002_com.chenty.tes_-1024x473.png)
 
